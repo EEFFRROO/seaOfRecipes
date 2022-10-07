@@ -10,9 +10,12 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MainController extends AbstractController
 {
-    #[Route('/', name: 'main')]
+    public const MAIN_ROUTE = '/';
+    public const MAIN_ROUTE_NAME = 'main';
+
+    #[Route(self::MAIN_ROUTE, name: self::MAIN_ROUTE_NAME)]
     public function main(): Response
     {
-        return new Response(phpinfo());
+        return $this->render('main.html.twig');
     }
 }

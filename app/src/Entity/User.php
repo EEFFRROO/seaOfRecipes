@@ -34,6 +34,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'reviewer', targetEntity: Review::class)]
     private Collection $reviews;
 
+    #[ORM\Column(length: 2047, nullable: true)]
+    private ?string $token = null;
+
     public function __construct()
     {
         $this->recipes = new ArrayCollection();
@@ -154,5 +157,21 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function getUserIdentifier(): string
     {
         return $this->email ?? '';
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    /**
+     * @param string|null $token
+     */
+    public function setToken(?string $token): void
+    {
+        $this->token = $token;
     }
 }
