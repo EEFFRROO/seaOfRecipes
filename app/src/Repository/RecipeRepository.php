@@ -39,28 +39,18 @@ class RecipeRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Recipe[] Returns an array of Recipe objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('r.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?Recipe
-//    {
-//        return $this->createQueryBuilder('r')
-//            ->andWhere('r.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    /**
+     * @param string $search
+     * @param int $limit
+     * @return Recipe[]
+     */
+    public function findByName(string $search = '', int $limit = 10): array
+    {
+        return $this->createQueryBuilder('r')
+            ->where('LOWER(r.name) like LOWER(:search)')
+            ->setParameter('search', "%$search%")
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+    }
 }

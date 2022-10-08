@@ -6,9 +6,10 @@ use App\Repository\IngredientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 #[ORM\Entity(repositoryClass: IngredientRepository::class)]
-class Ingredient
+class Ingredient implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -101,5 +102,15 @@ class Ingredient
         }
 
         return $this;
+    }
+
+    public function jsonSerialize()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'volume' => $this->volume,
+            'weight' => $this->weight,
+        ];
     }
 }

@@ -4,11 +4,13 @@
 namespace App\Listener;
 
 
+use App\Controller\LoginController;
 use App\Exception\NotEnoughCredentialsException;
 use App\Exception\UserAlreadyExistException;
 use App\Exception\UserBadPasswordException;
 use App\Exception\UserBadTokenException;
 use App\Exception\UserNotFoundException;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ExceptionEvent;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
@@ -42,8 +44,8 @@ class ExceptionListener
             $message = 'Неверно указаны данные';
             $response->setStatusCode(Response::HTTP_BAD_REQUEST);
         } elseif ($exception instanceof UserBadTokenException) {
-            $message = 'Неверный токен. Нужно авторизоваться';
-            $response->setStatusCode(Response::HTTP_UNAUTHORIZED);
+            $message = 'Неверный токен.';
+            $response = new RedirectResponse(LoginController::LOGIN_ROUTE);
         } else {
             $response->setStatusCode(Response::HTTP_INTERNAL_SERVER_ERROR);
         }

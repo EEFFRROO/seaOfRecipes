@@ -4,24 +4,33 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Страница авторизации</title>
+    <title>Добавление рецепта</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     {% block javascripts %}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-        <script src="scripts/Login.js"></script>
+        <script src="scripts/Recipe.js"></script>
     {% endblock %}
 </head>
 <body>
 <div class="container-sm mt-5 p-5">
     {% include 'header_block.html.twig' %}
     <div class="mb-3 sm">
-        <label for="emailInput" class="form-label">Адрес электронной почты</label>
-        <input type="email" class="form-control" id="emailInput">
+        <label for="nameInput" class="form-label">Название блюда</label>
+        <input type="text" class="form-control" id="nameInput" required>
     </div>
-    <div class="mb-3">
-        <label for="passwordInput" class="form-label">Пароль</label>
-        <input type="password" class="form-control" id="passwordInput">
+    <div class="mb-3 sm">
+        <label for="recipeTextInput" class="form-label">Рецепт</label>
+        <textarea class="form-control" id="recipeTextInput" rows="3" required></textarea>
+    </div>
+    <div class="mb-3 sm">
+        <label for="nameInput" class="form-label">Ингредиенты</label>
+        <select class="form-select" aria-label="Выбор ингредиентов" id="ingredientSelect">
+            <option selected value="" class="default">Выберите ингредиент</option>
+        </select>
+    </div>
+    <div class="mb-3 sm" id="ingredientsContainer">
+
     </div>
     <button type="submit" class="btn btn-primary" id="confirmButton">Принять</button>
 </div>

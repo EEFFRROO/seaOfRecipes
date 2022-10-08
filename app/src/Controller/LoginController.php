@@ -26,7 +26,7 @@ class LoginController extends AbstractController
     }
 
     #[Route(self::LOGIN_ROUTE, name: self::LOGIN_ROUTE_NAME)]
-    public function login(): Response
+    public function renderLoginForm(): Response
     {
         return $this->render('user/login.html.twig');
     }

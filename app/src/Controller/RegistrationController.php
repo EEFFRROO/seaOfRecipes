@@ -27,11 +27,8 @@ class RegistrationController extends AbstractController
         $this->userService = $userService;
     }
 
-    /**
-     * @throws NotEnoughCredentialsException
-     */
     #[Route(self::REGISTER_ROUTE, name: self::REGISTER_ROUTE_NAME)]
-    public function register(Request $request): Response
+    public function renderRegistrationForm(Request $request): Response
     {
         return $this->render('user/registration.html.twig');
     }

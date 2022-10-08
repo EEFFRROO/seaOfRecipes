@@ -6,9 +6,10 @@ use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 #[ORM\Entity(repositoryClass: RecipeRepository::class)]
-class Recipe
+class Recipe implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -30,7 +31,7 @@ class Recipe
     #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: Review::class)]
     private Collection $reviews;
 
-    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: IngredientRecipeRelation::class)]
+    #[ORM\OneToMany(mappedBy: 'recipe', targetEntity: IngredientRecipeRelation::class, cascade: ['persist'])]
     private Collection $ingredientRecipeRelations;
 
     public function __construct()
@@ -150,5 +151,23 @@ class Recipe
         }
 
         return $this;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $ingredients = [];
+        $this->ingredientRecipeRelations->map(function ($current) use (&$ingredients) {
+            $ingredients[] = [$current->getIngredient()->getName() => $current->getCount()];
+        });
+
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'rating' => $this->rating,
+            'text' => $this->text,
+            'cookId' => $this->cook?->getId(),
+            'cookName' => $this->cook?->getName(),
+            'ingredients' => $ingredients,
+        ];
     }
 }

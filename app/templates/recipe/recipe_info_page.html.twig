@@ -4,26 +4,31 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Страница авторизации</title>
+    <title>Добавление рецепта</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     {% block javascripts %}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-        <script src="scripts/Login.js"></script>
     {% endblock %}
 </head>
 <body>
 <div class="container-sm mt-5 p-5">
     {% include 'header_block.html.twig' %}
+    {% set recipe = recipe.jsonSerialize() %}
     <div class="mb-3 sm">
-        <label for="emailInput" class="form-label">Адрес электронной почты</label>
-        <input type="email" class="form-control" id="emailInput">
+        <h2>{{ recipe.name }}</h2>
     </div>
-    <div class="mb-3">
-        <label for="passwordInput" class="form-label">Пароль</label>
-        <input type="password" class="form-control" id="passwordInput">
+    <h5>Ингредиенты:</h5>
+    <div class="mb-3 sm">
+    {% for ingredient in recipe.ingredients %}
+        {% for key, value in ingredient %}
+                <p>{{ key }} : {{ value }}шт</p>
+        {% endfor %}
+    {% endfor %}
     </div>
-    <button type="submit" class="btn btn-primary" id="confirmButton">Принять</button>
+    <div class="mt-5 sm">
+        <i>{{ recipe.text }}</i>
+    </div>
 </div>
 </body>
 </html>
